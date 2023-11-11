@@ -2,7 +2,7 @@ import 'package:vehicule/data/settings.dart';
 import 'package:vehicule/data/settingsRepository.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
-  Settings _settings = Settings(1, 1, List.empty());
+  Settings _settings = Settings(0, 0, List.empty());
 
   @override
   get settings {
