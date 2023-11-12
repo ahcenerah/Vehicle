@@ -12,4 +12,6 @@ abstract class SettingsRepository {
 
   // Abstract method for toggling the selected extra based on an index.
   void toggleSelectedExtra(int index);
+
+
 }

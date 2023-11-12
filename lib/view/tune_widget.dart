@@ -34,9 +34,6 @@ class _TuneWidgetState extends State<TuneWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final  settingsRepository = GetIt.instance<SettingsRepository>();
-    final settings = settingsRepository.settings;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tune your vehicle"),
@@ -146,8 +143,9 @@ class _TuneWidgetState extends State<TuneWidget> {
             Container(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  // Fonction à exécuter lorsque le bouton est pressé, par exemple, soumettre le formulaire.
+                onPressed: (){
+                  Navigator.pushNamed(context,'/purchase',arguments: settings)
+                      .then((_) => setState (() {}));
                 },
                 style: ButtonStyle(
                   textStyle: MaterialStateProperty.all<TextStyle>(
