@@ -54,13 +54,13 @@ class _TuneWidgetState extends State<TuneWidget> {
                 return RadioListTile(
                   title: Text(option),
                   value: index,
-                  groupValue: selectedtypeOption,
+                  groupValue: settings.selectedType,
                   onChanged: (value) {
                     setState(() {
-                      selectedtypeOption = value;
-                      if (selectedtypeOption != 2) {
+                      settings.selectedType = value;
+                      if (settings.selectedType != 2) {
                         // Désélectionne les pneus "Soft" si le type n'est pas "Hovercraft"
-                        selectedtiresOption = null;
+                        settings.selectedTires = null;
                       }
                     });
                   },
@@ -76,14 +76,14 @@ class _TuneWidgetState extends State<TuneWidget> {
                 return RadioListTile(
                   title: Text(option),
                   value: index,
-                  groupValue: selectedtiresOption,
+                  groupValue: settings.selectedTires,
                   onChanged: (value) {
                     setState(() {
-                      selectedtiresOption = value;
+                      settings.selectedTires = value;
                     });
                   },
                   secondary: Text(index == 1 ? "30 credits" : "0 credits",style:TextStyle(fontSize: 15.0)),
-                  activeColor: selectedtypeOption != 2 ? null : Colors.grey,
+                  activeColor: settings.selectedType != 2 ? null : Colors.grey,
                 );
               }).toList(),
             ),
@@ -92,16 +92,16 @@ class _TuneWidgetState extends State<TuneWidget> {
               children: extrasOptions.asMap().entries.map((entry) {
                 int index = entry.key;
                 String option = entry.value;
-                bool isChecked = selectedextrasOptions.contains(index);
+                bool isChecked = List.from(settings.selectedExtras).contains(index);
                 return CheckboxListTile(
                   title: Text(option),
                   value: isChecked,
                   onChanged: (value) {
                     setState(() {
                       if (isChecked) {
-                        selectedextrasOptions.remove(index);
+                        List.from(settings.selectedExtras).remove(index);
                       } else {
-                        selectedextrasOptions.add(index);
+                        List.from(settings.selectedExtras).add(index);
                       }
                     });
                   },
@@ -122,7 +122,7 @@ class _TuneWidgetState extends State<TuneWidget> {
               children: [
                 Text('Total:'),
                 Text(
-                  '${calculateTotalCredits()} credits',
+                  '${calculateTotalCredits(settings.selectedType,settings.selectedTires,List.from(settings.selectedExtras))} credits',
                   style: TextStyle(fontSize: 20.0),
                 ),
               ],
@@ -136,7 +136,7 @@ class _TuneWidgetState extends State<TuneWidget> {
                     '215 Credits',
                     style: TextStyle(
                       fontSize: 16.0,
-                      color: calculateTotalCredits() > 215 ? Colors.red : Colors.black,
+                      color: calculateTotalCredits(settings.selectedType,settings.selectedTires,List.from(settings.selectedExtras)) > 215 ? Colors.red : Colors.black,
                     ),
                   ),
                 ),
@@ -163,7 +163,7 @@ class _TuneWidgetState extends State<TuneWidget> {
     );
 
   }
-  int calculateTotalCredits() {
+  int calculateTotalCredits(int selectedtypeOption, int selectedtiresOption, List<int> selectedextrasOptions) {
     int typePrice = selectedtypeOption == 2 ? 50 : 0;
     int tiresPrice = selectedtiresOption == 1 ? 30 : 0;
     int extrasPrice = 0;
