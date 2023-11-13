@@ -1,4 +1,3 @@
-import 'package:vehicule/data/settings.dart';
 
 abstract class SettingsRepository {
   // Abstract getter for retrieving settings.
